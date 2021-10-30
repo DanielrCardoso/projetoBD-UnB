@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #6C7A89;
+        }
+    </style>
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="home">{{sess}}</a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarTogglerDemo02"
+              aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="logoutG">Alterar jogo</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="logout">Sair</a>
+                </li>
+              </ul>
+              <form class="d-flex input-group w-auto" action="/home" method="POST">
+                <input type="search" name="pesq" class="form-control" placeholder='Pesquisar'
+                aria-label="Search" />
+                <form action="/home" method="POST">
+                  <button class="btn btn-outline-primary" type="submit" data-mdb-ripple-color="dark" name="btnP"
+                    value="Partida">
+                    Partida
+                  </button>
+                  <button class="btn btn-outline-primary" type="submit" data-mdb-ripple-color="dark" name="btnP"
+                    value="Conta">
+                    Conta
+                  </button>
+                </form>
+              </form>
+            </div>
+          </div>
+        </nav>
+          {%if flag == "True"%}
+          <div id="liveAlertPlaceholder"></div>
+          <button type="button" class="btn btn-primary" id="liveAlertBtn">Usuario não econtrado!</button>
+          {%endif%}
+
+
+    <div class="container">
+        {%if (data|length) == 0%}
+                <div class="box2">
+                    <section>
+                        <form action="/telaUser" method="POST">
+                            <div class="semGames">
+                                <h2>Infelizmente você não possui jogos em sua biblioteca :(</h2>
+                                
+                                <div class="iraddgame">
+                                   <a href="#" class="story">
+                                    <button class="btn-hover color-9" onclick="window.location.href='redirect(url_for("telaUser"))'" style="display: block;">Ir para a loja</button>
+                                </a>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <script src="{{url_for('static', filename='submititem.js')}}"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                        crossorigin="anonymous"></script>
+                </div>
+        {%else%}
+                <div class="box">
+                    <section>
+                        <form action="/telaUser" method="POST">
+                            <div class="gamb">
+                                <!-- <div class="form-check"> -->
+                                {% for i in range(0,data|length,4)%}
+                                    <div class="containergames">
+                                        <div class="row">
+                                            {% for element in data[i:i+4] %}
+                                                <!-- <button class="item" name = "jogo" type="submit" value={{element}}>{{element}}</button> -->
+
+                                                <div class = "item"><button id="jogo" name = "jogo" type="submit" value={{element[1]}} 
+                                                    style="max-width:200px;max-height:200px;width: auto;height: auto;outline-style: none;background: transparent;font-size:0;border:none!important; margin-top: 10px; ">
+                                                    <img src="/static/img/91pMqYxjxLL.jpg" style="max-width:300px;max-height:300px;width: auto;height: auto;" alt="Jogo"></button></div>
+                                                
+                                                    
+                                                    <!-- <a href="/home" style="text-decoration: none; color:inherit" onclick="event.preventDefault();this.closest('form').submit();" class="item"><img src="/static/img/91pMqYxjxLL.jpg" style="max-width:200px;max-height:200px;width: auto;height: auto;" alt="Jogo">{{element}}</a> -->
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                                <div class = "espacofinal"></div>
+                            <!-- </div> -->
+                        </form>
+                    </section>
+                    <script src="{{url_for('static', filename='submititem.js')}}"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                        crossorigin="anonymous"></script>
+                </div>
+        {%endif%}
+    </div>
+</body>
+
+</html>
+
+<style>
+    /* button{
+  display: none;
+} */
+
+    .container {
+        width: 92vw;
+        height: 92vh;
+        background: #6C7A89;
+        display: flex;
+        flex-direction: row;
+        justify-content:flex-end;
+        align-items:center;    
+    }
+
+    .box {
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .box2 {
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .gamb{
+        background-color: #f1f1f1;
+        min-width: 500px;
+        margin: 55px;
+        height: 550px;
+        text-align: center;
+    }
+
+    @media (min-width:1330px) {
+    .conteudo {
+        justify-content: center;
+    }
+    }
+
+    .centerbtn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-check {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+
+    body {
+        margin: 0px;
+    }
+
+    .opa{
+        display: none;
+    }
+
+    .containergames {
+  display: flex;
+  margin-top: 50px;
+}
+
+.item {
+  position: relative;
+  display: block;
+  flex: 1 1 0px;
+  transition: transform 500ms;
+  margin-right: 40px;
+}
+
+.containergames:focus-within .item,
+.containergames:hover .item {
+  transform: translateX(-25%);
+}
+
+.item:focus ~ .item,
+.item:hover ~ .item {
+  transform: translateX(25%);
+}
+
+.containergames .item:focus,
+.containergames .item:hover {
+  transform: scale(1.35);
+  z-index: 1;
+}
+
+body {
+  overflow: hidden;
+}
+
+.item img {
+  display: block;
+  max-width: 200px;
+}
+.espacofinal{
+    width: 200px;
+    height: 200px;
+    /* teste */
+}
+.semGames{
+    width: 700px;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    
+}
+
+.iraddgame{
+        position: absolute;
+        top: 60%;
+        right: center;
+        border-radius: 10px;
+}
+
+
+   /* https://codepen.io/JavaScriptJunkie/pen/pPRooV */
+
+   * {
+    -webkit-box-sizing: border-box;
+    /* -moz-box-sizing: border-box; */
+    box-sizing: border-box;
+}
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 300px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 75px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    /* moz-transition: all .4s ease-in-out; */
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    /* moz-transition: all .4s ease-in-out; */
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+.btn-hover.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+}
+.btn-hover.color-3 {
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+.btn-hover.color-4 {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+.btn-hover.color-5 {
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+.btn-hover.color-6 {
+    background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+    box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+}
+.btn-hover.color-7 {
+    background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+    box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+.btn-hover.color-9 {
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.btn-hover.color-10 {
+        background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+.btn-hover.color-11 {
+       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+
+
+input[type="radio"]{
+    visibility: hidden;
+}
+
+label{
+    display: block;
+    border: 4px solid #666;
+    width: 60px;
+    float: left;
+}
+
+input[type="radio"]:checked+label{
+    border-color: #ccf;
+}
+
+img{
+    height: 50px;
+}
+</style>
